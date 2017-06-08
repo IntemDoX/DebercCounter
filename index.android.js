@@ -36,23 +36,23 @@ class AddButton extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { pressStatus: false };
+        this.state = {pressStatus: false};
     }
 
     _handlePress() {
         ToastAndroid.showWithGravity('All Your Base Are Belong To Us', ToastAndroid.SHORT, ToastAndroid.CENTER);
     }
+
     render() {
         return (
-        <TouchableHighlight style={styles.buttonContainer}
-                            underlayColor='red'
-            onPress={() => this._handlePress()}>
-            <Text>Add points</Text>
-        </TouchableHighlight>
+            <TouchableHighlight style={styles.buttonContainer}
+                                underlayColor='red'
+                                onPress={() => this._handlePress()}>
+                <Text>Add points</Text>
+            </TouchableHighlight>
         )
     }
 }
-
 
 
 class TeamsContainer extends Component {
@@ -79,7 +79,8 @@ class TotalPointsContainer extends Component {
 }
 
 class Distribution {
-    constructor(totalPoints, teamOnePoints,teamTwoPoints) {
+    constructor(gameNumber, totalPoints, teamOnePoints, teamTwoPoints) {
+        this.gameNumber = gameNumber;
         this.totalPoints = totalPoints;
         this.teamOnePoints = teamOnePoints;
         this.teamTwoPoints = teamTwoPoints;
@@ -87,11 +88,11 @@ class Distribution {
 }
 
 var gameHistory = [
-    new Distribution(162,100,62),
-    new Distribution(182,120,62),
-    new Distribution(162,52,110),
-    new Distribution(162,42,120),
-    new Distribution(252,2,250),
+    new Distribution(1, 162, 100, 62),
+    new Distribution(2, 182, 120, 62),
+    new Distribution(3, 162, 52, 110),
+    new Distribution(4, 162, 42, 120),
+    new Distribution(5, 252, 2, 250),
 ];
 
 class GameHistoryList extends Component {
@@ -100,24 +101,28 @@ class GameHistoryList extends Component {
         const teamOne = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             dataSource: teamOne.cloneWithRows(gameHistory),
-         };
+        };
     }
 
     render() {
         return (
             <ListView style={styles.gameList}
-                dataSource={this.state.dataSource}
+                      dataSource={this.state.dataSource}
                 //todo real values
-                renderRow={(rowData) => <View style={styles.listRow}>
-                    <Text style={styles.textListRow}>
-                        {rowData.teamOnePoints}
-                    </Text>
-                    <View style={separatorsStyles.separatorVertical} />
-                    <Text style={styles.textListRow}>
-                        {rowData.teamTwoPoints}
-                    </Text>
-                </View>}
-                renderSeparator={(sectionId, rowId) => <View key={rowId} style={separatorsStyles.separatorHorizontal} />}
+                      renderRow={(rowData) => <View style={styles.listRow}>
+                          <Text style={styles.textListRow}>
+                              {rowData.teamOnePoints}
+                          </Text>
+                          <Text style={styles.textListRow}>
+                              {rowData.gameNumber}
+                          </Text>
+                          <View style={separatorsStyles.separatorVertical}/>
+                          <Text style={styles.textListRow}>
+                              {rowData.teamTwoPoints}
+                          </Text>
+                      </View>}
+                      renderSeparator={(sectionId, rowId) => <View key={rowId}
+                                                                   style={separatorsStyles.separatorHorizontal}/>}
             />
         );
     }
@@ -170,11 +175,11 @@ const separatorsStyles = StyleSheet.create({
 
 const styles = StyleSheet.create({
     container: {
-        flex:1,
+        flex: 1,
         backgroundColor: '#F5FCFF',
     },
     addButton: {
-        fontSize:30
+        fontSize: 30
     },
     gameList: {
         marginTop: 20,
@@ -183,23 +188,26 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         marginBottom: 5,
-        alignItems:'center',
+        alignItems: 'center',
         marginTop: 5,
     },
     textListRow: {
+        flex:1,
         fontSize: 20,
         textAlign: 'center',
+        alignItems: 'center',
+        justifyContent:'center',
     },
     buttonContainer: {
         flex: 1,
         backgroundColor: '#2E9298',
-        justifyContent:'center',
-        alignItems:'center',
-        height:50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 60,
         position: 'absolute',
         bottom: 0,
         left: 0,
-        right:0,
+        right: 0,
     }
 });
 
