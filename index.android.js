@@ -108,7 +108,6 @@ class GameHistoryList extends Component {
         return (
             <ListView style={styles.gameList}
                       dataSource={this.state.dataSource}
-                //todo real values
                       renderRow={(rowData) => <View style={styles.listRow}>
                           <Text style={styles.textListRow}>
                               {rowData.teamOnePoints}
@@ -121,8 +120,8 @@ class GameHistoryList extends Component {
                               {rowData.teamTwoPoints}
                           </Text>
                       </View>}
-                      renderSeparator={(sectionId, rowId) => <View key={rowId}
-                                                                   style={separatorsStyles.separatorHorizontal}/>}
+                      renderSeparator={(sectionId, rowId) =>
+                          <View key={rowId} style={separatorsStyles.separatorHorizontal}/>}
             />
         );
     }
